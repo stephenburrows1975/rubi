@@ -1,0 +1,13 @@
+{% extends 'itembank/base.html' %}
+
+{% block content %}
+    <h1>New {{ form.Meta.verbose_name }}</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        <table class="table table-bordered table-sm">
+            <tbody>
+                {{ form.as_table }}
+            </tbody>
+        </table>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

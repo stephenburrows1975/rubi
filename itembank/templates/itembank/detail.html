@@ -1,0 +1,14 @@
+{% extends 'itembank/base.html' %}
+
+{% block content %}
+    <h1>{{ header|capfirst }}</h1>
+    <h2>Question ID: {{ question_object.id }} || Level: {{ question_object.level }} || {{ question_object.language }}</h2>
+    <h3>{{ question_object.rubric }}</h3>
+    <ol type="1">
+        <li>{{ question_object.option1 }}</li>
+        <li>{{ question_object.option2 }}</li>
+        <li>{{ question_object.option3 }}</li>
+    </ol>
+    <h4>Answer: {{ question_object.answer }}</h4>
+
+{% endblock %}

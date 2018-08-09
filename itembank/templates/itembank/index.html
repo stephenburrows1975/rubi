@@ -1,0 +1,36 @@
+{% extends 'itembank/base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">Item Bank Index Page</h1>
+
+    </div>
+    {% for k, v in model_counts.items %}
+        <h3>{{ k|capfirst }} total item types created: {{ v.count }}</h3>
+
+        {% for item_object in v %}
+            {{ item_object.level }}<br>
+        {% endfor %}
+        <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <tr>
+        {% for non_item in non_items %}
+            <td>
+            <table class="table table-bordered">
+            {% for ni in non_item %}
+                <tr>
+                    <td>{{ ni }}</td><td>0</td>
+                </tr>
+            {% endfor %}
+            </table>
+            </td>
+        {% endfor %}
+            </tr>
+        </table>
+        </div>
+    {% endfor %}
+
+
+
+
+{% endblock %}
