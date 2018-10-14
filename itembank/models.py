@@ -42,3 +42,15 @@ class ShortTextItem(models.Model):
     pub_date = models.DateTimeField('date published')
     def __str__(self):
         return self.rubric
+
+
+class LongTextItem(models.Model):
+    rubric = models.CharField(max_length=400)
+    word_limit = models.IntegerField(
+        default=250,
+        validators=[MaxValueValidator(2500), MinValueValidator(10)])
+    level = models.ForeignKey(CEFRLevel, on_delete=models.CASCADE)
+    language = models.ForeignKey(SkillSystem, on_delete=models.CASCADE)
+    pub_date = models.DateTimeField('date published')
+    def __str__(self):
+        return self.rubric

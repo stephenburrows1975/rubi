@@ -1,6 +1,8 @@
 {% extends 'itembank/base.html' %}
 
 {% block content %}
+<div class="row justify-content-center">
+    <div class="col-8">
     <h1>New {{ form.Meta.verbose_name }}</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         <table class="table table-bordered table-sm">
@@ -10,4 +12,6 @@
         </table>
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
+    </div>
+</div>
 {% endblock %}

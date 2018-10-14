@@ -5,31 +5,18 @@
         <h1 class="h2">Item Bank Index Page</h1>
 
     </div>
-    {% for k, v in model_counts.items %}
-        <h3>{{ k|capfirst }} total item types created: {{ v.count }}</h3>
-
-        {% for item_object in v %}
-            {{ item_object.level }}<br>
-        {% endfor %}
-        <div class="table-responsive">
-        <table class="table table-bordered table-sm">
-            <tr>
-        {% for non_item in non_items %}
-            <td>
-            <table class="table table-bordered">
-            {% for ni in non_item %}
-                <tr>
-                    <td>{{ ni }}</td><td>0</td>
-                </tr>
-            {% endfor %}
-            </table>
-            </td>
-        {% endfor %}
-            </tr>
-        </table>
-        </div>
-    {% endfor %}
-
+    LEVEL COUNT<br>
+    {{ level_count }}<br><br>
+    ITEM MODELS<br>
+    {{ item_models }}<br><br>
+    NON ITEM Models <br>
+    {{ non_item_models }}<br><br>
+    APP MODELS<br>
+    {{ app_models }}<br><br>
+    APP MODEL ITEMS <br>
+    {{ app_model_items }}<br><br>
+    levels and skills<br>
+    {{ levels_and_skills }}
 
 
 

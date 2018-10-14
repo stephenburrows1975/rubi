@@ -78,7 +78,7 @@ def index(request):
     # takes all models from itembank
     app_models = apps.all_models['itembank']
     item_models = {}
-    non_item_models = []
+    non_item_models = {}
     level_count = []
     levels_and_skills = []
     app_models_items = app_models.items()
@@ -91,11 +91,12 @@ def index(request):
             #level_count[key] = value.objects.filter(level__cefr_level='A1').count()
         else:
             #non_items.append(value.objects.all())
-            non_item_models.append(value)
+            #non_item_models.append(value)
+            non_item_models[key] = value
 
 
-    for levels in non_item_models:
-        for b in levels.objects.all():
+    for name, type in non_item_models.items():
+        for b in type.objects.all():
             levels_and_skills.append(b)
 
 

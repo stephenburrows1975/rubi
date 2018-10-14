@@ -1,39 +1,18 @@
 {% extends 'itembank/base.html' %}
+{% load render_table from django_tables2 %}
 
 {% block content %}
-    {% if latest_question_list %}
+
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <h1 class="h2">{{ header|capfirst }}</h1>
              <div class="btn-group mr-2">
-                <a href="{% url 'itembank:new_item' name_pass %}">
+                 <a href="{% url specific_url %}">
                     <button class="btn btn-sm btn-outline-secondary">Add an item</button>
                 </a>
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm table-hover">
-              <thead class="thead-light">
-                <tr>
-                    {% for item in headers %}
-                  <th>{{ item|capfirst }}</th>
-                  {% endfor %}
-                </tr>
-              </thead>
-              <tbody>
-              {% for question in latest_question_list %}
-                  <tr class='clickable-row' data-href="{% url 'itembank:detail' name_pass question.pk %}" style="cursor: pointer;">
-                      <td>{{ question.pk }}</td>
-                      <td>{{ question.rubric }}</td>
-                      <td>{{ question.level }}</td>
-                      <td>{{ question.language }}</td>
-                      <td>{{ question.pub_date }}</td>
-                  </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
-    {% else %}
-        <p>No questions are available.</p>
-    {% endif %}
+        Total number of items: {{ list_count }}
+        {% render_table table %}
+
 
 {% endblock %}
