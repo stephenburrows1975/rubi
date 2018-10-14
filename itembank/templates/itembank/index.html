@@ -5,19 +5,32 @@
         <h1 class="h2">Item Bank Index Page</h1>
 
     </div>
-    LEVEL COUNT<br>
-    {{ level_count }}<br><br>
-    ITEM MODELS<br>
-    {{ item_models }}<br><br>
-    NON ITEM Models <br>
-    {{ non_item_models }}<br><br>
-    APP MODELS<br>
-    {{ app_models }}<br><br>
-    APP MODEL ITEMS <br>
-    {{ app_model_items }}<br><br>
-    levels and skills<br>
-    {{ levels_and_skills }}
+    {{ count_output }}
+    <br><br>
+    {{  df2.keys }}<br>
+    {{  df2.values }}
+    {% for key, value in count_output.items %}
+        <table  class="table table-bordered table-sm">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="row">
+                <h4>{{ key }}</h4>
+            </th>
+        </tr>
+        </thead>
+        <tr><td>
+        <table>
+            <tr>
 
+                {% for key2, value2 in value.items %}
+                    <td class="table-active"><h5>{{ key2 }}</h5></td>
+                    <td><h5>{{ value2 }}</h5></td>
+                    <td>&nbsp;&nbsp</td>
+                {% endfor %}
 
-
+            </tr>
+        </table>
+        </td></tr>
+        <table>
+    {% endfor %}
 {% endblock %}

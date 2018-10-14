@@ -5,6 +5,8 @@ from django.utils import timezone
 from .forms import *
 from .tables import *
 from .models import MultipleChoiceItem, ShortTextItem, LongTextItem
+import pandas as pd
+
 
 # class created to avoid code repetition in new item views
 class NewItem:
@@ -80,50 +82,33 @@ def index(request):
     item_models = {}
     non_item_models = {}
     count_output = {}
-    level_count = []
     levels_and_skills = []
-    app_models_items = app_models.items()
     # key is model name lowercase, value is the model
     for key, value in app_models.items():
         # seperates item models from level and skill models
         if "item" in key:
-            #model_counts[str(value._meta.verbose_name_plural)] = value.objects.all()
             item_models[key] = value
-            #level_count[key] = value.objects.filter(level__cefr_level='A1').count()
         else:
-            #non_items.append(value.objects.all())
-            #non_item_models.append(value)
             non_item_models[key] = value
-
 
     for name, type in non_item_models.items():
         if 'cefr' in name:
             for b in type.objects.all():
                 levels_and_skills.append(b)
 
-
     for key, model in item_models.items():
-        #count_output[key] = []
-        #level_count.append(key)
-        temp_list = []
+        #temp_list = []
+        temp_dict = {}
         for x in levels_and_skills:
-            temp_dict = {}
             temp_dict[str(x)] = model.objects.filter(level__cefr_level=str(x)).count()
-            temp_list.append(temp_dict)
-            level_count.append(temp_dict)
-            #level_count.append(str(x))
-            #level_count.append(model.objects.filter(level__cefr_level=str(x)).count())
-        count_output[key] = temp_list
+        #temp_list.append(temp_dict)
+        count_output[key] = temp_dict
 
-    # another try 090918
-    # mc_count = MultipleChoiceItem.objects.filter(level__cefr_level='A1').count()
+    df2 = pd.DataFrame(count_output)
+
     context = {
-        'app_model_items': app_models_items,
-        'app_models': count_output,
-        'item_models': item_models,
-        'non_item_models': non_item_models,
-        'level_count': level_count,
-        'levels_and_skills': levels_and_skills,
+        'df2': df2,
+        'count_output': count_output,
     }
     return render(request, 'itembank/index.html', (context))
 

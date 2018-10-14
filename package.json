@@ -1,0 +1,19 @@
+{
+  "name": "rubi",
+  "version": "1.0.0",
+  "description": "An English language test created with Django\r My first Django project, it will consist of the following apps\r 1. An itembank\r 2. A test builder\r 3. A candidate registration, test delivery system, test scheduling and results admin platform\r 4. A secure test delivery platform\r 5. A marking platform for non-automated marking items\r 6. A data analytics service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephenburrows1975/rubi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephenburrows1975/rubi/issues"
+  },
+  "homepage": "https://github.com/stephenburrows1975/rubi#readme"
+}
