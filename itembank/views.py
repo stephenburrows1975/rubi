@@ -1,72 +1,179 @@
 from django.apps import apps
+from django_tables2 import RequestConfig
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import MultipleChoiceItemForm, ShortTextItemForm
+from django.utils import timezone
+from .forms import *
+from .tables import *
+from .models import MultipleChoiceItem, ShortTextItem, LongTextItem
 
+# class created to avoid code repetition in new item views
+class NewItem:
+    def __init__(self, form_type, request):
+        self.form = form_type(request.POST)
+        self.post = self.form.save(commit=False)
+        self.post.pub_date = timezone.now()
+        self.post.save()
 
-# Create your views here.
-def new_item(request, item_type):
-    if item_type == "MultipleChoiceItem":
-        item_form = MultipleChoiceItemForm
-    else:
-        item_form = ShortTextItemForm
+# New item views, they call the class above
+def new_item_MC(request):
     if request.method == "POST":
-        form = item_form(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            #post.published_date = timezone.now()
-            post.save()
-            return redirect('itembank:detail', {'item_form': item_form, 'pk': post.pk})
+        item = NewItem(MultipleChoiceItemForm, request)
+        return redirect('itembank:detail_MC', question_id=item.post.pk)
     else:
-        form = item_form()
-    context = {
-        'form': item_form,
-        'item_type': item_type
-    }
-    return render(request, 'itembank/new_item.html', context)
+        form = MultipleChoiceItemForm()
+        return render(request, 'itembank/new_item.html', {'form': form})
 
+def new_item_ST(request):
+    if request.method == "POST":
+        item = NewItem(LongTextItemForm, request)
+        return redirect('itembank:detail_ST', question_id=item.post.pk)
+    else:
+        form = ShortTextItemForm()
+        return render(request, 'itembank/new_item.html', {'form': form})
 
+def new_item_LT(request):
+    if request.method == "POST":
+        item = NewItem(LongTextItemForm, request)
+        return redirect('itembank:detail_LT', question_id=item.post.pk)
+    else:
+        form = LongTextItemForm()
+        return render(request, 'itembank/new_item.html', {'form': form})
+
+# edit item views are accessed from index table
+def edit_item_MC(request, id):
+    item = MultipleChoiceItem.objects.get(pk=id)
+    if request.method == "POST":
+        form = MultipleChoiceItemForm(request.POST, instance=item)
+        form.pub_date = timezone.now()
+        form.save()
+        return redirect('itembank:detail_MC', question_id=item.pk)
+    else:
+        form = MultipleChoiceItemForm(instance=item)
+        return render(request, 'itembank/new_item.html', {'form': form})
+
+def edit_item_ST(request, id):
+    item = ShortTextItem.objects.get(pk=id)
+    if request.method == "POST":
+        form = ShortTextItemForm(request.POST, instance=item)
+        form.pub_date = timezone.now()
+        form.save()
+        return redirect('itembank:detail_ST', question_id=item.pk)
+    else:
+        form = ShortTextItemForm(instance=item)
+        return render(request, 'itembank/new_item.html', {'form': form})
+
+def edit_item_LT(request, id):
+    item = LongTextItem.objects.get(pk=id)
+    if request.method == "POST":
+        form = ShortTextItemForm(request.POST, instance=item)
+        form.pub_date = timezone.now()
+        form.save()
+        return redirect('itembank:detail_LT', question_id=item.pk)
+    else:
+        form = LongTextItemForm(instance=item)
+        return render(request, 'itembank/new_item.html', {'form': form})
+
+# this needs work
 def index(request):
     # takes all models from itembank
     app_models = apps.all_models['itembank']
-    model_counts = {}
-    non_items = []
+    item_models = {}
+    non_item_models = []
+    level_count = []
+    levels_and_skills = []
+    app_models_items = app_models.items()
     # key is model name lowercase, value is the model
     for key, value in app_models.items():
-        # adds to dictionary with model name and number of model objects created
+        # seperates item models from level and skill models
         if "item" in key:
-            model_counts[str(value._meta.verbose_name_plural)] = value.objects.all()
+            #model_counts[str(value._meta.verbose_name_plural)] = value.objects.all()
+            item_models[key] = value
+            #level_count[key] = value.objects.filter(level__cefr_level='A1').count()
         else:
-            non_items.append(value.objects.all())
+            #non_items.append(value.objects.all())
+            non_item_models.append(value)
+
+
+    for levels in non_item_models:
+        for b in levels.objects.all():
+            levels_and_skills.append(b)
+
+
+    for key, model in item_models.items():
+        level_count.append(key)
+        for x in levels_and_skills:
+            #level_count[key] = model.objects.filter(level__cefr_level=str(x)).count()
+            #level_count.append(model)
+            level_count.append(str(x))
+            level_count.append(model.objects.filter(level__cefr_level=str(x)).count())
+
+    # another try 090918
+    # mc_count = MultipleChoiceItem.objects.filter(level__cefr_level='A1').count()
     context = {
+        'app_model_items': app_models_items,
         'app_models': app_models,
-        'model_counts': model_counts,
-        'non_items': non_items
+        'item_models': item_models,
+        'non_item_models': non_item_models,
+        'level_count': level_count,
+        'levels_and_skills': levels_and_skills,
     }
     return render(request, 'itembank/index.html', (context))
 
+# class created to reduce code repetition in display_items views
+class DefineItem:
+    def __init__(self, item_type, item_table, item_code):
+        self.item_type = item_type
+        self.item_table = item_table
+        self.get_table = item_table(item_type.objects.order_by('id'))
+        self.context = {
+            'table': self.get_table,
+            'list_count': item_type.objects.count(),
+            'header': str(item_type._meta.verbose_name_plural),
+            'specific_url': ('itembank:new_item_'+item_code)
+        }
+
+    def produce_table(self, request, number_items):
+        self.a_table = RequestConfig(request, paginate={'per_page': number_items}).configure(self.get_table)
 
 # displays all items of a given item type
 # item type is passed in the url
-def display_items(request, item_type):
-    ItemType = apps.get_model(app_label='itembank', model_name=item_type)
-    latest_question_list = ItemType.objects.order_by('id')[:5]
-    header = str(ItemType._meta.verbose_name_plural)
-    name_pass = str(ItemType._meta.object_name)
-    headers = ['ID', 'Question', 'CEFR Level', 'Type', 'Published']
-    context = {
-        'latest_question_list': latest_question_list,
-        'header': header,
-        'headers': headers,
-        'name_pass': name_pass,
-    }
-    return render(request, 'itembank/disply_items.html', (context))
+def display_items_MC(request):
+    item = DefineItem(MultipleChoiceItem, MultipleChoiceItemTable, 'MC')
+    item.produce_table(request, 10)
+    return render(request, 'itembank/disply_items.html', (item.context))
+
+def display_items_ST(request):
+    item = DefineItem(ShortTextItem, ShortTextItemTable, 'ST')
+    item.produce_table(request, 5)
+    return render(request, 'itembank/disply_items.html', (item.context))
+
+def display_items_LT(request):
+    item = DefineItem(LongTextItem, LongTextItemTable, 'ST')
+    item.produce_table(request, 5)
+    return render(request, 'itembank/disply_items.html', (item.context))
 
 # display specifics of an item when it has been clicked on
-def detail(request, item_type, question_id):
-    ItemType = apps.get_model(app_label='itembank', model_name=item_type)
-    question_object = get_object_or_404(ItemType, pk=question_id)
-    header = str(ItemType._meta.verbose_name)
+def detail_MC(request, question_id):
+    question_object = get_object_or_404(MultipleChoiceItem, pk=question_id)
+    header = str(MultipleChoiceItem._meta.verbose_name)
+    context = {
+        'question_object': question_object,
+        'header': header,
+    }
+    return render(request, 'itembank/detail.html', (context))
+
+def detail_ST(request, question_id):
+    question_object = get_object_or_404(ShortTextItem, pk=question_id)
+    header = str(ShortTextItem._meta.verbose_name)
+    context = {
+        'question_object': question_object,
+        'header': header,
+    }
+    return render(request, 'itembank/detail.html', (context))
+
+def detail_LT(request, question_id):
+    question_object = get_object_or_404(LongTextItem, pk=question_id)
+    header = str(LongTextItem._meta.verbose_name)
     context = {
         'question_object': question_object,
         'header': header,
