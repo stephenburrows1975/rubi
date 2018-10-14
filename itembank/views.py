@@ -79,6 +79,7 @@ def index(request):
     app_models = apps.all_models['itembank']
     item_models = {}
     non_item_models = {}
+    count_output = {}
     level_count = []
     levels_and_skills = []
     app_models_items = app_models.items()
@@ -96,23 +97,29 @@ def index(request):
 
 
     for name, type in non_item_models.items():
-        for b in type.objects.all():
-            levels_and_skills.append(b)
+        if 'cefr' in name:
+            for b in type.objects.all():
+                levels_and_skills.append(b)
 
 
     for key, model in item_models.items():
-        level_count.append(key)
+        #count_output[key] = []
+        #level_count.append(key)
+        temp_list = []
         for x in levels_and_skills:
-            #level_count[key] = model.objects.filter(level__cefr_level=str(x)).count()
-            #level_count.append(model)
-            level_count.append(str(x))
-            level_count.append(model.objects.filter(level__cefr_level=str(x)).count())
+            temp_dict = {}
+            temp_dict[str(x)] = model.objects.filter(level__cefr_level=str(x)).count()
+            temp_list.append(temp_dict)
+            level_count.append(temp_dict)
+            #level_count.append(str(x))
+            #level_count.append(model.objects.filter(level__cefr_level=str(x)).count())
+        count_output[key] = temp_list
 
     # another try 090918
     # mc_count = MultipleChoiceItem.objects.filter(level__cefr_level='A1').count()
     context = {
         'app_model_items': app_models_items,
-        'app_models': app_models,
+        'app_models': count_output,
         'item_models': item_models,
         'non_item_models': non_item_models,
         'level_count': level_count,
