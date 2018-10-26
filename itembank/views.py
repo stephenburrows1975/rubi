@@ -7,7 +7,6 @@ from .tables import *
 from .models import MultipleChoiceItem, ShortTextItem, LongTextItem
 import pandas as pd
 
-
 # class created to avoid code repetition in new item views
 class NewItem:
     def __init__(self, form_type, request):

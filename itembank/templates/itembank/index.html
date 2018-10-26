@@ -1,14 +1,15 @@
 {% extends 'itembank/base.html' %}
 
 {% block content %}
+
+    <div id="container"></div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 class="h2">Item Bank Index Page</h1>
-
     </div>
-    {{ count_output }}
-    <br><br>
-    {{  df2.keys }}<br>
-    {{  df2.values }}
+    <div class="row justify-content-center">
+    <div class="col-8">
+
     {% for key, value in count_output.items %}
         <table  class="table table-bordered table-sm">
         <thead class="thead-dark">
@@ -19,7 +20,7 @@
         </tr>
         </thead>
         <tr><td>
-        <table>
+        <table style="width:100%">
             <tr>
 
                 {% for key2, value2 in value.items %}
@@ -31,6 +32,32 @@
             </tr>
         </table>
         </td></tr>
-        <table>
+        </table>
+        <div id='{{ key }}'></div>
+        <script>
+    Highcharts.chart({{ key }}, {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '{{ key }}'
+        },
+        xAxis: {
+            categories: [
+                {% for key2, value2 in value.items %}
+                    '{{ key2 }}',
+                {% endfor %}
+                    ]
+        },
+        series: [{
+            name: 'Items Created',
+            data: [{% for key2, value2 in value.items %}{{ value2 }},{% endfor %}]
+        },
+        ]
+    });
+  </script>
+
     {% endfor %}
+    </div>
+    </div>
 {% endblock %}

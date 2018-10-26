@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/itembank/templates/itembank/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/itembank/templates/itembank/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/itembank/templates/itembank/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/itembank/templates/itembank/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/itembank/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/itembank/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/itembank/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/itembank/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
     </list>
@@ -43,32 +44,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/itembank/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+            <state relative-caret-position="-1172">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
               <folding>
-                <element signature="e#0#28#0" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#div#2;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/index.html">
+      <file leaf-file-name="new_item.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/new_item.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="23" />
+            <state relative-caret-position="51">
+              <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -79,14 +80,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>static</find>
       <find>nav-</find>
       <find>cur</find>
       <find>hove</find>
@@ -95,6 +95,8 @@
       <find>app_models</find>
       <find>sta</find>
       <find>staticfile</find>
+      <find>boot</find>
+      <find>static</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -118,11 +120,12 @@
         <option value="$PROJECT_DIR$/itembank/models.py" />
         <option value="$PROJECT_DIR$/itembank/tables.py" />
         <option value="$PROJECT_DIR$/itembank/forms.py" />
+        <option value="$PROJECT_DIR$/itembank/templates/itembank/plotly.html" />
+        <option value="$PROJECT_DIR$/itembank/views.py" />
         <option value="$PROJECT_DIR$/itembank/urls.py" />
         <option value="$PROJECT_DIR$/itembank/templates/itembank/base.html" />
         <option value="$PROJECT_DIR$/mysite/settings.py" />
         <option value="$PROJECT_DIR$/itembank/templates/itembank/index.html" />
-        <option value="$PROJECT_DIR$/itembank/views.py" />
       </list>
     </option>
   </component>
@@ -148,7 +151,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,6 +198,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -339,7 +342,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49924356" weight="0.32843137" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5030257" side_tool="true" weight="0.32352942" />
@@ -347,8 +349,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4969743" weight="0.32352942" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32843137" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49848714" weight="0.42973855" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5985401" visible="true" weight="0.30559757" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49848714" weight="0.31535947" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5985401" visible="true" weight="0.22919819" />
       <window_info anchor="right" id="R Packages" order="3" weight="0.32980332" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="R Graphics" order="4" weight="0.32980332" />
@@ -364,7 +366,7 @@
       <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290735" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32843137" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -416,13 +418,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -629,20 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/new_item.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/itembank/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" column="67" lean-forward="true" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/itembank/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -664,18 +645,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="66" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/itembank/models.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -687,26 +658,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/settings.py">
+    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/plotly.html" />
+    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="23" />
+        <state relative-caret-position="104">
+          <caret line="73" column="68" selection-start-line="73" selection-start-column="68" selection-end-line="73" selection-end-column="68" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/index.html">
+    <entry file="file://$PROJECT_DIR$/itembank/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state relative-caret-position="17">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/itembank/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        <state relative-caret-position="-1172">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/new_item.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itembank/templates/itembank/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#div#2;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
