@@ -18,9 +18,11 @@
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'itembank:index' %}">Item Bank</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
+          {% if user.is_authenticated %}
+              <li class="nav-item text-nowrap"><a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a></>
+          {% else %}
+              <li class="nav-item text-nowrap"><a  class="nav-link"href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+          {% endif %}
       </ul>
     </nav>
 
@@ -28,14 +30,16 @@
     <div class="container-fluid">
       <div class="row">
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          {% if user.is_authenticated %}
+              User: {{ user.get_username }}
+          {% endif %}
           <div class="sidebar-sticky">
-
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>By Item Type</span>
               <a class="d-flex align-items-center text-muted" href="#">
                   <span data-feather="plus-circle"></span>
               </a>
-            </h6>
+          </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'itembank:display_MC' %}">
