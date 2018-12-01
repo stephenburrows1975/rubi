@@ -86,21 +86,23 @@ def index(request):
     for key, value in app_models.items():
         # seperates item models from level and skill models
         if "item" in key:
-            item_models[key] = value
+            #item_models[key] = value
+            item_models[str(value._meta.verbose_name_plural)] = value
         else:
-            non_item_models[key] = value
+            non_item_models[str(value._meta.verbose_name_plural)] = value
 
+    # extracts only cefr levels, not skills from non_items
+    # and place them in a list called levels_and_skills
     for name, type in non_item_models.items():
         if 'cefr' in name:
             for b in type.objects.all():
                 levels_and_skills.append(b)
 
+    # extract the data in item_models
     for key, model in item_models.items():
-        #temp_list = []
         temp_dict = {}
         for x in levels_and_skills:
             temp_dict[str(x)] = model.objects.filter(level__cefr_level=str(x)).count()
-        #temp_list.append(temp_dict)
         count_output[key] = temp_dict
 
     df2 = pd.DataFrame(count_output)

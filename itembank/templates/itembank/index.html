@@ -15,7 +15,7 @@
         <thead class="thead-dark">
         <tr>
             <th scope="row">
-                <h4>{{ key }}</h4>
+                <h4>{{ key|capfirst }}</h4>
             </th>
         </tr>
         </thead>
@@ -35,27 +35,44 @@
         </table>
         <div id='{{ key }}'></div>
         <script>
-    Highcharts.chart({{ key }}, {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: '{{ key }}'
-        },
-        xAxis: {
-            categories: [
-                {% for key2, value2 in value.items %}
-                    '{{ key2 }}',
-                {% endfor %}
-                    ]
-        },
-        series: [{
-            name: 'Items Created',
-            data: [{% for key2, value2 in value.items %}{{ value2 }},{% endfor %}]
-        },
-        ]
-    });
-  </script>
+        Highcharts.chart('{{ key }}', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '{{ key|capfirst }}'
+            },
+            xAxis: {
+                categories: [
+                    {% for key2, value2 in value.items %}
+                        '{{ key2 }}',
+                    {% endfor %}
+                        ],
+                title: {
+                    enabled: true,
+                    text: 'CEFR Level',
+                    style: {
+                        fontWeight: 'normal'
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Items created',
+                    style: {
+                        fontWeight: 'normal'
+                    }
+                }
+            },
+            series: [{
+                showInLegend: false,
+                name: 'Items Created',
+                data: [{% for key2, value2 in value.items %}{{ value2 }},{% endfor %}]
+            },
+            ]
+        });
+        </script>
 
     {% endfor %}
     </div>

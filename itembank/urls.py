@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf.urls import include
 from . import views
 
 app_name = 'itembank'
@@ -22,3 +23,19 @@ urlpatterns = [
     path('itembank/MultipleChoiceItem/new_item', views.new_item_MC, name='new_item_MC'),
     path('itembank/LongTextItem/new_item', views.new_item_LT, name='new_item_LT'),
 ]
+'''
+    accounts/ login/ [name='login'] #works
+    accounts/ logout/ [name='logout'] #works
+    accounts/ password_change/ [name='password_change'] #goes to django admin
+    accounts/ password_change/done/ [name='password_change_done'] # goes to django admin
+    accounts/ password_reset/ [name='password_reset'] #works
+    accounts/ password_reset/done/ [name='password_reset_done'] #works but link doesn't from pass
+    accounts/ reset/<uidb64>/<token>/ [name='password_reset_confirm'] 
+    accounts/ reset/done/ [name='password_reset_complete'] #works after adding itembank: to url
+
+#Add Django site authentication urls (for login, logout, password management)
+#app_name = ''
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
+'''
