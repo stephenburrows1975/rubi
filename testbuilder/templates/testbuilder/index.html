@@ -1,0 +1,68 @@
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{% static "static_jquery/js/jquery.js" %}"></script>
+    <meta charset="UTF-8">
+    <title>Itembank Index</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="container-fluid">
+                <div class="row">
+                    <h3>Unpublished Tests</h3>
+                    {% render_table table %}
+                </div>
+                <div class="row">
+                    <h3>Published Tests</h3>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <h3>Selected Test</h3>
+            second column
+            <p id="demo"></p>
+        </div>
+        <div class="col">
+            <h3>Available Items</h3>
+            third column
+        </div>
+    </div>
+</div>
+
+  <script>
+      $(document).ready(function () {
+          $('#select_button').on('click', function() {
+              var test_id = $(this).attr("name");
+<!-- Two ajax are required, one to post and the other to get  -->
+              $.ajax({
+                  url: '{% url "testbuilder:selected_test" %}',
+                  data: {
+                      'test_id': test_id
+                  },
+                  dataType: 'json',
+                  success: function (data) {
+                          $("#demo").append(data)
+                  }
+              });
+          });
+      });
+
+  </script>
+
+<!--
+    <script>
+        function myFunction() {
+            document.getElementById("demo").innerHTML = '{{ table }}';
+        }
+    </script>
+ -->
+</body>
+</html>

@@ -9,6 +9,13 @@
     </data-source>
     <data-source name="db" uuid="c5637d38-f85b-4dcb-823c-dd2f073a7717">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <introspection-schemas>*:</introspection-schemas>
+    </data-source>
+    <data-source name="db [2]" uuid="412cb3bd-4f8b-404c-9a9b-19b1976841f7">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+    </data-source>
+    <data-source name="db [3]" uuid="424d73be-48df-46b2-b97f-c05f8a4dff8f">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
     </data-source>
   </component>
 </project>

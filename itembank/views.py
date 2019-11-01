@@ -2,43 +2,42 @@ from django.apps import apps
 from django_tables2 import RequestConfig
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from .tables import *
 from .models import MultipleChoiceItem, ShortTextItem, LongTextItem
-import pandas as pd
 
 # class created to avoid code repetition in new item views
 class NewItem:
-    def __init__(self, form_type, request):
-        self.form = form_type(request.POST)
-        self.post = self.form.save(commit=False)
-        self.post.pub_date = timezone.now()
-        self.post.save()
 
-# New item views, they call the class above
+    def __init__(self, form_type, request):
+        self.form_name = form_type.__name__
+        if request.method == "POST":
+            self.form = form_type(request.POST)
+            self.post = self.form.save(commit=False)
+            self.post.pub_date = timezone.now()
+            self.post.save()
+            if form_type == MultipleChoiceItemForm:
+                self.codes = { self.form_name: 'itembank:detail_MC' }
+            elif form_type == ShortTextItemForm:
+                self.codes = { self.form_name: 'itembank:detail_ST' }
+            elif form_type == LongTextItemForm:
+                self.codes = { self.form_name: 'itembank:detail_LT' }
+            self.return_msg = redirect(self.codes.get(self.form_name), question_id=self.post.pk)
+        else:
+            self.return_msg = render(request, 'itembank/new_item.html', {'form': form_type()})
+
+    def return_page(self):
+        return self.return_msg
+
 def new_item_MC(request):
-    if request.method == "POST":
-        item = NewItem(MultipleChoiceItemForm, request)
-        return redirect('itembank:detail_MC', question_id=item.post.pk)
-    else:
-        form = MultipleChoiceItemForm()
-        return render(request, 'itembank/new_item.html', {'form': form})
+    return NewItem(MultipleChoiceItemForm, request).return_page()
 
 def new_item_ST(request):
-    if request.method == "POST":
-        item = NewItem(LongTextItemForm, request)
-        return redirect('itembank:detail_ST', question_id=item.post.pk)
-    else:
-        form = ShortTextItemForm()
-        return render(request, 'itembank/new_item.html', {'form': form})
+    return NewItem(ShortTextItemForm, request).return_page()
 
 def new_item_LT(request):
-    if request.method == "POST":
-        item = NewItem(LongTextItemForm, request)
-        return redirect('itembank:detail_LT', question_id=item.post.pk)
-    else:
-        form = LongTextItemForm()
-        return render(request, 'itembank/new_item.html', {'form': form})
+    return NewItem(LongTextItemForm, request).return_page()
 
 # edit item views are accessed from index table
 def edit_item_MC(request, id):
@@ -74,14 +73,13 @@ def edit_item_LT(request, id):
         form = LongTextItemForm(instance=item)
         return render(request, 'itembank/new_item.html', {'form': form})
 
-# this needs work
+# index page data display, could be optimised better but works
+@login_required
 def index(request):
     # takes all models from itembank
     app_models = apps.all_models['itembank']
     item_models = {}
     non_item_models = {}
-    count_output = {}
-    levels_and_skills = []
     # key is model name lowercase, value is the model
     for key, value in app_models.items():
         # seperates item models from level and skill models
@@ -93,25 +91,16 @@ def index(request):
 
     # extracts only cefr levels, not skills from non_items
     # and place them in a list called levels_and_skills
-    for name, type in non_item_models.items():
-        if 'cefr' in name:
-            for b in type.objects.all():
-                levels_and_skills.append(b)
+    levels_and_skills = [ b for name, type in non_item_models.items()
+                         if 'cefr' in name for b in type.objects.all() ]
 
     # extract the data in item_models
+    count_output = {}
     for key, model in item_models.items():
-        temp_dict = {}
-        for x in levels_and_skills:
-            temp_dict[str(x)] = model.objects.filter(level__cefr_level=str(x)).count()
-        count_output[key] = temp_dict
+        count_output[key] = { str(x):model.objects.filter(level__cefr_level=str(x)).count()
+                      for x in levels_and_skills }
 
-    df2 = pd.DataFrame(count_output)
-
-    context = {
-        'df2': df2,
-        'count_output': count_output,
-    }
-    return render(request, 'itembank/index.html', (context))
+    return render(request, 'itembank/index.html', {'count_output': count_output})
 
 # class created to reduce code repetition in display_items views
 class DefineItem:

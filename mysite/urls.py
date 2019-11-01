@@ -18,9 +18,9 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    #path('itembank/', include('itembank.urls')),
     path('admin/', admin.site.urls),
     path('', include('itembank.urls')),
+    path('', include('testbuilder.urls')),
 ]
 
 #Add Django site authentication urls (for login, logout, password management)

@@ -32,6 +32,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 INSTALLED_APPS = [
     'itembank.apps.ItembankConfig',
+    'testbuilder.apps.TestbuilderConfig',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'bootstrap',
     'fontawesome',
+    'django_static_jquery',
+    'jquery',
 ]
 
 MIDDLEWARE = [
