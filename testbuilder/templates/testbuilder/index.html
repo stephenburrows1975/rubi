@@ -9,11 +9,15 @@
     <meta charset="UTF-8">
     <title>Itembank Index</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/testbuilder.css' %}">
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col"><h1 align="center">Test Builder Index</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-5">
             <div class="container-fluid">
                 <div class="row">
                     <h3>Unpublished Tests</h3>
@@ -26,30 +30,45 @@
 
         </div>
         <div class="col">
-            <h3>Selected Test</h3>
-            second column
-            <p id="demo"></p>
-        </div>
-        <div class="col">
-            <h3>Available Items</h3>
-            third column
+            <h3>Test Preview</h3>
+            <div class="shadow">
+                <p id="demo"></p>
+            </div>
         </div>
     </div>
 </div>
 
   <script>
       $(document).ready(function () {
+          $('.shadow').hide();
           $('#select_button').on('click', function() {
+              $('.shadow').show("slow");
               var test_id = $(this).attr("name");
-<!-- Two ajax are required, one to post and the other to get  -->
+              var $demo = $('#demo');
               $.ajax({
                   url: '{% url "testbuilder:selected_test" %}',
                   data: {
                       'test_id': test_id
                   },
                   dataType: 'json',
-                  success: function (data) {
-                          $("#demo").append(data)
+                  success: function(test_items) {
+                      $.each(test_items, function(item, description){
+                          $demo.append("<h4>" + item + "</h4>");
+                          switch(item){
+                              case 'multiple choice items':
+                                  $.each(description, function (item_no, content) {
+                                      $demo.append(content.rubric + "<br>" +
+                                          "<li>" + content.option1 + "</li>" +
+                                          "<li>" + content.option2 + "</li>" +
+                                          "<li>" + content.option3 + "</li>")
+                                  });
+                                  break;
+                              case 'short text items':
+                                  $.each(description, function (item_no, content) {
+                                      $demo.append(content.rubric + "<br>")
+                                  });
+                          }
+                      });
                   }
               });
           });
@@ -57,12 +76,5 @@
 
   </script>
 
-<!--
-    <script>
-        function myFunction() {
-            document.getElementById("demo").innerHTML = '{{ table }}';
-        }
-    </script>
- -->
 </body>
 </html>

@@ -1,0 +1,19 @@
+body {
+    //padding: 2rem;
+    background: #f3f3f3;
+}
+
+.shadow {
+    background: #ffffff;
+    border: 5px solid #1C6EA4;
+    border-radius: 12px;
+    box-shadow: 5px 5px 10px;
+    padding-top: 50px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+    padding-left: 80px;
+}
+
+li {
+    padding-left: 30px;
+}
